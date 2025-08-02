@@ -150,6 +150,48 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Login endpoint
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email and password are required.' });
+    }
+    const userRes = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (userRes.rows.length === 0) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+    }
+    const user = userRes.rows[0];
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+    }
+    res.json({ success: true, message: 'Login successful.', user: { id: user.id, name: user.name, email: user.email } });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
+  }
+app.post('/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'All fields are required.' });
+    }
+    // Check if user already exists
+    const userCheck = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (userCheck.rows.length > 0) {
+      return res.status(400).json({ error: 'Email already registered.' });
+    }
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)', [name, email, hashedPassword]);
+    res.json({ success: true, message: 'Registration successful.' });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ error: 'Server error. Please try again later.' });
+  }
+});
+
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -355,6 +397,7 @@ app.get('/api/health', (req, res) => {
         success: true, 
         message: 'Care Circle API is running!',
         timestamp: new Date().toISOString()
+    });
     });
 });
 
