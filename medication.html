@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Reminders - Care Circle</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="js/script.js" defer></script>
+    <script src="medication-guest-log.js" defer></script>
+    <script src="notify.js" defer></script>
+    <script src="medication-offline.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h2>🌸 Care Circle</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="medication.html" class="active">Medication</a></li>
+                <li><a href="health.html">Health Check</a></li>
+                <li><a href="emergency.html">Emergency</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <h1>💊 Medication Reminders</h1>
+            <p>Never miss your medication with our smart reminder system</p>
+        </section>
+
+        <section class="medication-content">
+            <div class="medication-info">
+                <h2>Why Medication Reminders Matter 🎯</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">⏰</div>
+                        <h3>Timely Doses</h3>
+                        <p>Take medications at the 2025 copyrights for maximum effectiveness</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🏥</div>
+                        <h3>Better Health</h3>
+                        <p>Consistent medication helps manage chronic conditions</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📱</div>
+                        <h3>Easy Tracking</h3>
+                        <p>Keep track of all your medications in one place</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="medication-form-container">
+                <h2>Set Up Medication Reminder 📋</h2>
+                <form id="medicationForm" class="medication-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="medicationName">Medication Name</label>
+                            <input type="text" id="medicationName" name="medicationName" required placeholder="e.g., Aspirin, Metformin">
+                        </div>
+                        <div class="form-group">
+                            <label for="dosage">Dosage</label>
+                            <input type="text" id="dosage" name="dosage" required placeholder="e.g., 100mg, 2 tablets">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="frequency">Frequency</label>
+                            <select id="frequency" name="frequency" required>
+                                <option value="">Select frequency</option>
+                                <option value="once-daily">Once daily</option>
+                                <option value="twice-daily">Twice daily</option>
+                                <option value="three-times">Three times daily</option>
+                                <option value="four-times">Four times daily</option>
+                                <option value="as-needed">As needed</option>
+                                <option value="weekly">Weekly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Preferred Time</label>
+                            <input type="time" id="time" name="time" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Special instructions, side effects to watch for, etc."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn primary">Set Reminder</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="medication-tips">
+            <h2>Medication Safety Tips 🛡️</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>📝 Keep a List</h4>
+                    <p>Maintain an updated list of all medications, including over-the-counter drugs and supplements</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🥛 Take with Food</h4>
+                    <p>Some medications should be taken with food to prevent stomach upset</p>
+                </div>
+                <div class="tip-card">
+                    <h4>💧 Stay Hydrated</h4>
+                    <p>Drink plenty of water when taking medications unless advised otherwise</p>
+                </div>
+                <div class="tip-card">
+                    <h4>👨‍⚕️ Ask Questions</h4>
+                    <p>Don't hesitate to ask your doctor or pharmacist about your medications</p>
+                </div>
+            </div>
+        </section>
+        <div style="text-align:center; margin:2rem 0;">
+        <a href="medication-record.html" class="btn primary" style="font-size:1.1rem; padding:0.8rem 2rem; border-radius:2rem; box-shadow:0 2px 8px rgba(60,60,60,0.13); transition: transform 0.2s; display:inline-block; animation: fadeIn 1s;">View Medication Records</a>
+    </div>
+</main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Care Circle. Made with ❤️ for elderly care</p>
+            <div class="social-links">
+                <span>📱</span>
+                <span>📧</span>
+                <span>🌐</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
