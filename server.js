@@ -114,6 +114,42 @@ async function ensureTables() {
 
 ensureTables().catch(console.error);
 
+// Ensure users table exists
+(async () => {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+})();
+
+// Registration endpoint
+const bcrypt = require('bcryptjs');
+app.post('/api/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'All fields are required.' });
+    }
+    // Check if user already exists
+    const userCheck = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (userCheck.rows.length > 0) {
+      return res.status(400).json({ error: 'Email already registered.' });
+    }
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)', [name, email, hashedPassword]);
+    res.json({ success: true, message: 'Registration successful.' });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ error: 'Server error. Please try again later.' });
+  }
+});
+
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
