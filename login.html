@@ -114,6 +114,58 @@
         setInterval(updateClock, 1000);
         updateClock();
 
+        // Tab switching logic
+        loginTab.onclick = () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.style.display = '';
+            registerForm.style.display = 'none';
+        };
+        registerTab.onclick = () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            loginForm.style.display = 'none';
+            registerForm.style.display = '';
+        };
+
+        // Registration logic
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            let errorMsg = document.getElementById('registerErrorMsg');
+            if (errorMsg) errorMsg.remove();
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert('Registration successful! Please login.');
+                    loginTab.click();
+                } else {
+                    errorMsg = document.createElement('div');
+                    errorMsg.id = 'registerErrorMsg';
+                    errorMsg.textContent = result.error || 'Registration failed.';
+                    errorMsg.style.color = '#e74c3c';
+                    errorMsg.style.textAlign = 'center';
+                    errorMsg.style.marginTop = '0.5rem';
+                    registerForm.appendChild(errorMsg);
+                }
+            } catch (err) {
+                errorMsg = document.createElement('div');
+                errorMsg.id = 'registerErrorMsg';
+                errorMsg.textContent = 'Registration error.';
+                errorMsg.style.color = '#e74c3c';
+                errorMsg.style.textAlign = 'center';
+                errorMsg.style.marginTop = '0.5rem';
+                registerForm.appendChild(errorMsg);
+            }
+        });
+
         // Login logic
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -165,10 +217,44 @@
         };
 
         // Tab switching logic
-        const loginTab = document.getElementById('loginTab');
-        const registerTab = document.getElementById('registerTab');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
+
+        // Registration logic
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            let errorMsg = document.getElementById('registerErrorMsg');
+            if (errorMsg) errorMsg.remove();
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert('Registration successful! Please login.');
+                    loginTab.click();
+                } else {
+                    errorMsg = document.createElement('div');
+                    errorMsg.id = 'registerErrorMsg';
+                    errorMsg.textContent = result.error || 'Registration failed.';
+                    errorMsg.style.color = '#e74c3c';
+                    errorMsg.style.textAlign = 'center';
+                    errorMsg.style.marginTop = '0.5rem';
+                    registerForm.appendChild(errorMsg);
+                }
+            } catch (err) {
+                errorMsg = document.createElement('div');
+                errorMsg.id = 'registerErrorMsg';
+                errorMsg.textContent = 'Registration error.';
+                errorMsg.style.color = '#e74c3c';
+                errorMsg.style.textAlign = 'center';
+                errorMsg.style.marginTop = '0.5rem';
+                registerForm.appendChild(errorMsg);
+            }
+        });
 
         // Add login redirect logic
         loginForm.addEventListener('submit', async function(e) {
